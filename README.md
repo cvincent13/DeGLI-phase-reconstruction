@@ -5,6 +5,14 @@ Pytorch implementation of the paper [Deep Griﬃn–Lim Iteration: Trainable Ite
 Official Tensorflow implementation: 
 
 
+## Reconstruct the phase of an audio signal
+
+`python reconstruct_phase.py [-h] [--n_iter N_ITER] [--degli_checkpoint DEGLI_CHECKPOINT] file output_dir algorithm`
+
+Using the Griffin-Lim Algorithm (GLA): `python reconstruct_phase.py --n_iter 100 [file] [output_dir] gla`
+
+Using DeGLI with trained checkpoint: `python reconstruct_phase.py --n_iter 10 --degli_checkpoint checkpoints/degli_ljspeech.pth [file] [output_dir] degli`
+
 
 ## Training on LJSpeech
 
