@@ -1,4 +1,7 @@
-
+import numpy as np
+import os
+import torch
+from torch.utils.data import Dataset
 
 
 def zero_pad(x, win_len, shift):
@@ -13,7 +16,7 @@ def normalize_1d(signal, maxval=(2.**15-1.)/2**15):
     signal   = signal / max_data * maxval
     return signal
 
-def postprocess(x_out, len_x, batch=False):
+def postprocess(x_out, len_x, winlen, shift, batch=False):
     x_out = x_out.numpy()
     if batch:
         x_out = x_out[:,winlen-shift:winlen-shift+len_x]
@@ -23,13 +26,32 @@ def postprocess(x_out, len_x, batch=False):
     return x_out
 
 
-data_folder = 'data/'
-test_files = [os.path.join(data_folder, 'test', name) for name in os.listdir(os.path.join(data_folder, 'test'))]
+
+class AudioDataset(Dataset):
+    def __init__(self, files, stft):
+        super(AudioDataset, self).__init__()
+        self.files = files
+        self.stft = stft
+
+    def __len__(self):
+        return len(self.files)
+    
+    def __getitem__(self, index):
+        name = self.files[index]
+        data = np.load(name)
+        x = torch.FloatTensor(data)
+        X = self.stft(x)
+        amplitude = torch.abs(X)
+        return X, amplitude
+
 
 class AudioTestDataset(Dataset):
-    def __init__(self, files):
+    def __init__(self, files, stft, winlen, shift):
         super(AudioTestDataset, self).__init__()
         self.files = files
+        self.stft = stft
+        self.winlen = winlen
+        self.shift = shift
 
     def __len__(self):
         return len(self.files)
@@ -38,11 +60,11 @@ class AudioTestDataset(Dataset):
         name = self.files[index]
         data = np.load(name)
         len_x = len(data)
-        data = np.concatenate((np.zeros(winlen-shift,),
+        data = np.concatenate((np.zeros(self.winlen-self.shift,),
                                           data ,
-                                          np.zeros(winlen-shift,)), axis=0)
-        data = zero_pad(data, winlen, shift)
+                                          np.zeros(self.winlen-self.shift,)), axis=0)
+        data = zero_pad(data, self.winlen, self.shift)
         x = torch.FloatTensor(data)
-        X = stft(x)
+        X = self.stft(x)
         amplitude = torch.abs(X)
         return X, amplitude, len_x
