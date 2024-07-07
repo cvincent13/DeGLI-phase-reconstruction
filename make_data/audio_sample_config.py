@@ -1,3 +1,5 @@
+# From https://sites.google.com/view/yoshiki-masuyama/degli
+
 # -*- coding: utf-8 -*-
 ###############################################################################
 sample_list = ['LJ001-0186.wav', 'LJ002-0096.wav', 'LJ003-0282.wav',

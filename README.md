@@ -2,7 +2,7 @@
 
 Pytorch implementation of the paper [Deep Griﬃn–Lim Iteration: Trainable Iterative Phase Reconstruction Using Neural Network](https://ieeexplore.ieee.org/document/9242279).
 
-Official Tensorflow implementation: 
+Official Tensorflow implementation: https://sites.google.com/view/yoshiki-masuyama/degli
 
 
 ## Reconstruct the phase of an audio signal

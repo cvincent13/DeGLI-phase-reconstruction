@@ -1,3 +1,5 @@
+# From https://sites.google.com/view/yoshiki-masuyama/degli
+
 # -*- coding: utf-8 -*-
 ###############################################################################
 import glob
