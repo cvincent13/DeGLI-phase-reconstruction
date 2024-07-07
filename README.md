@@ -8,5 +8,7 @@ Official Tensorflow implementation:
 
 ## Training on LJSpeech
 
-1. Download [LJSpeech](https://keithito.com/LJ-Speech-Dataset/) in make_data
+1. Download [LJSpeech](https://keithito.com/LJ-Speech-Dataset/) in `make_data`
 2. Prepare data for training: `python -m make_data.prepare_LJspeech`
+3. Adjust parameters in `train.py`
+4. Run `python train.py`
